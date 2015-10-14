@@ -22,14 +22,18 @@ func (f *Feed) AddAuthor(name string, email string) {
 
 func (f *Feed) AddEntry(e Entry) {
 	f.Entry = append(f.Entry, e)
+	f.Entrycount++
 
 }
 
 type Feed struct {
-	XMLName xml.Name `xml:"feed"`
+	XMLName xml.Name  `xml:"feed"`
+	Xmlns   string    `xml:"xmlns,attr"`
+	Xmlnapp string    `xml:"xmlns:apps,attr"`
+	Title   string    `xml:"title"`
+	Update  time.Time `xml:"updated"`
+	Author  Author
+	Entry   []Entry
 
-	Title  string    `xml:"title"`
-	Update time.Time `xml:"update"`
-	Author Author
-	Entry  []Entry
+	Entrycount int `xml:"-"`
 }
