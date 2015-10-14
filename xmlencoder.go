@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/dasfoo/gmail-filters/filter"
 	"github.com/dasfoo/gmail-filters/writer"
-	"strconv"
 	"time"
 )
 
@@ -21,7 +20,9 @@ func main() {
 	e.AddProperty("label", "nowork")
 	v.AddEntry(e)
 
-	v.Personal("Ivan Ivanov", "ivan", "ii")
+	v.Personal([]string{"Ivan", "Ivanov"},
+		[]string{"ivan.ivanov", "ivanov", "ivan"},
+		[]string{"iiv", "iv"})
 
 	output, err := xml.MarshalIndent(v, "  ", "   ")
 	if err != nil {
