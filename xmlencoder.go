@@ -12,7 +12,7 @@ import (
 func main() {
 
 	v := &filter.Feed{Title: "Mail Filters", Update: time.Now()}
-	v.AddAuthor("", "")
+	v.AddAuthor("Ivan Ivanov", "ivan@mail.ru")
 	v.Xmlns = "http://www.w3.org/2005/Atom"
 	v.Xmlnapp = "http://schemas.google.com/apps/2006"
 
@@ -21,7 +21,7 @@ func main() {
 	e.AddProperty("label", "nowork")
 	v.AddEntry(e)
 
-	v.Personal("", "", "")
+	v.Personal("Ivan Ivanov", "ivan", "ii")
 
 	output, err := xml.MarshalIndent(v, "  ", "   ")
 	if err != nil {
