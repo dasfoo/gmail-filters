@@ -23,6 +23,10 @@ func main() {
 	v.Personal([]string{"Ivan", "Ivanov"},
 		[]string{"ivan.ivanov", "ivanov", "ivan"},
 		[]string{"iiv", "iv"})
+	v.Team("team1@example.org", "team2@example.org", "team3@example.org")
+
+	v.Environment("g.example.com")
+	v.Entertainment("aa.example.com")
 
 	output, err := xml.MarshalIndent(v, "  ", "   ")
 	if err != nil {
