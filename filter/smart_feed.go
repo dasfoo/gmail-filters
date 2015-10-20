@@ -7,9 +7,6 @@ import (
 	"time"
 )
 
-//name - real name
-//un - username
-//alias -
 func (f *Feed) Personal(real_name []string, emails []string) {
 
 	sname := strings.Join(real_name, " OR ")

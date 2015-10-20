@@ -15,14 +15,8 @@ func main() {
 	v.Xmlns = "http://www.w3.org/2005/Atom"
 	v.Xmlnapp = "http://schemas.google.com/apps/2006"
 
-	e := filter.Entry{Title: "Mail Filter", Id: strconv.Itoa(v.Entrycount), Updated: time.Now(),
-		Category: filter.Category{Term: `filter`, Text: ""}}
-	e.AddProperty("label", "nowork")
-	v.AddEntry(e)
-
 	v.Personal([]string{"Ivan", "Ivanov"},
-		[]string{"ivan.ivanov", "ivanov", "ivan"},
-		[]string{"iiv", "iv"})
+		[]string{"ivan.ivanov", "ivanov", "ivan"})
 	v.Team("team1@example.org", "team2@example.org", "team3@example.org")
 
 	v.Environment("g.example.com")
