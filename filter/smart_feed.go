@@ -34,7 +34,7 @@ func (f *Feed) Team(mails ...string) {
 }
 
 func (f *Feed) Environment(listnames ...string) {
-	s := strings.Join(listnames, ">) OR (<")
+	s := strings.Join(listnames, "> OR <")
 	s = "list:(<" + s + ">)"
 	e := Entry{Title: "Mail Filter", Id: "tag:dasfoo.filters,smartfilter:environment", Updated: time.Now(),
 		Category: Category{Term: `filter`, Text: ""}}
@@ -46,7 +46,7 @@ func (f *Feed) Environment(listnames ...string) {
 }
 
 func (f *Feed) Entertainment(listnames ...string) {
-	s := strings.Join(listnames, ">) OR (<")
+	s := strings.Join(listnames, "> OR <")
 	s = "list:(<" + s + ">)"
 	e := Entry{Title: "Mail Filter", Id: "tag:dasfoo.filters,smartfilter:entertainment", Updated: time.Now(),
 		Category: Category{Term: `filter`, Text: ""}}

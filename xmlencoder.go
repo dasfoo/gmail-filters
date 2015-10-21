@@ -15,8 +15,8 @@ func main() {
 		[]string{"ivan.ivanov", "ivanov", "ivan"})
 	v.Team("team1@example.org", "team2@example.org", "team3@example.org")
 
-	v.Environment("g.example.com")
-	v.Entertainment("aa.example.com")
+	v.Environment("go.example.com", "kafka.example.com")
+	v.Entertainment("english.example.com", "shopping.example.com")
 
 	output, err := xml.MarshalIndent(v, "  ", "   ")
 	if err != nil {
