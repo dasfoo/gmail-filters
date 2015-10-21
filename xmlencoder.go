@@ -4,15 +4,12 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/dasfoo/gmail-filters/filter"
-	"time"
 )
 
 func main() {
 
-	v := &filter.Feed{Title: "Mail Filters", Update: time.Now()}
+	v := filter.NewFeed()
 	v.AddAuthor("Ivan Ivanov", "ivan@mail.ru")
-	v.Xmlns = "http://www.w3.org/2005/Atom"
-	v.Xmlnapp = "http://schemas.google.com/apps/2006"
 
 	v.Personal([]string{"Ivan", "Ivanov"},
 		[]string{"ivan.ivanov", "ivanov", "ivan"})

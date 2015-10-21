@@ -39,3 +39,14 @@ type Feed struct {
 
 	Entrycount int `xml:"-"`
 }
+
+func NewFeed() *Feed {
+	f := Feed{}
+
+	f.Xmlns = "http://www.w3.org/2005/Atom"
+	f.Xmlnapp = "http://schemas.google.com/apps/2006"
+	f.Update = time.Now()
+
+	return &f
+
+}
