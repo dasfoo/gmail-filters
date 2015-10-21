@@ -24,7 +24,6 @@ func (f *Feed) AddEntry(e Entry) {
 	e.AddProperty("sizeOperator", "s_sl")
 	e.AddProperty("sizeUnit", "s_smb")
 	f.Entries = append(f.Entries, e)
-	f.Entrycount++
 
 }
 
@@ -36,8 +35,6 @@ type Feed struct {
 	Update  time.Time `xml:"updated"`
 	Author  Author
 	Entries []Entry
-
-	Entrycount int `xml:"-"`
 }
 
 func NewFeed() *Feed {
