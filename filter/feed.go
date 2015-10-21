@@ -21,7 +21,9 @@ func (f *Feed) AddAuthor(name string, email string) {
 }
 
 func (f *Feed) AddEntry(e Entry) {
-	f.Entry = append(f.Entry, e)
+	e.AddProperty("sizeOperator", "s_sl")
+	e.AddProperty("sizeUnit", "s_smb")
+	f.Entries = append(f.Entries, e)
 	f.Entrycount++
 
 }
@@ -33,7 +35,7 @@ type Feed struct {
 	Title   string    `xml:"title"`
 	Update  time.Time `xml:"updated"`
 	Author  Author
-	Entry   []Entry
+	Entries []Entry
 
 	Entrycount int `xml:"-"`
 }

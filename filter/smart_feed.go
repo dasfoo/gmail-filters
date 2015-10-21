@@ -17,8 +17,6 @@ func (f *Feed) Personal(real_name []string, emails []string) {
 	e.AddProperty("to", smails)
 	e.AddProperty("shouldAlwaysMarkAsImportant", "true")
 	e.AddProperty("shouldStar", "true")
-	e.AddProperty("sizeOperator", "s_sl")
-	e.AddProperty("sizeUnit", "s_smb")
 
 	f.AddEntry(e)
 }
@@ -31,8 +29,6 @@ func (f *Feed) Team(mails ...string) {
 	e.AddProperty("from", s)
 	e.AddProperty("label", "team")
 	e.AddProperty("shouldAlwaysMarkAsImportant", "true")
-	e.AddProperty("sizeOperator", "s_sl")
-	e.AddProperty("sizeUnit", "s_smb")
 
 	f.AddEntry(e)
 
@@ -46,8 +42,6 @@ func (f *Feed) Environment(listnames ...string) {
 	e.AddProperty("hasTheWord", s)
 	e.AddProperty("label", "Environment")
 	e.AddProperty("shouldArchive", "true")
-	e.AddProperty("sizeOperator", "s_sl")
-	e.AddProperty("sizeUnit", "s_smb")
 
 	f.AddEntry(e)
 }
@@ -60,8 +54,6 @@ func (f *Feed) Entertainment(listnames ...string) {
 	e.AddProperty("hasTheWord", s)
 	e.AddProperty("label", "Entertainment")
 	e.AddProperty("shouldArchive", "true")
-	e.AddProperty("sizeOperator", "s_sl")
-	e.AddProperty("sizeUnit", "s_smb")
 
 	f.AddEntry(e)
 }

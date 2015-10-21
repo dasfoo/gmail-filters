@@ -4,7 +4,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/dasfoo/gmail-filters/filter"
-	"github.com/dasfoo/gmail-filters/writer"
 	"time"
 )
 
@@ -27,5 +26,4 @@ func main() {
 		fmt.Printf("error: %v\n", err)
 	}
 	fmt.Println(xml.Header + string(output))
-	writer.WriteToFile("test.xml", xml.Header+string(output))
 }
