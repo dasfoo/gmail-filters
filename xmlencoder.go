@@ -12,7 +12,7 @@ func main() {
 	v.AddAuthor("Ivan Ivanov", "ivan@mail.ru")
 
 	v.Personal([]string{"Ivan", "Ivanov"},
-		[]string{"ivan.ivanov", "ivanov", "ivan"})
+		[]string{"ivan.ivanov", "ivanov", "iv"})
 	v.Team("team1@example.org", "team2@example.org", "team3@example.org")
 
 	v.Environment("go.example.com", "kafka.example.com")

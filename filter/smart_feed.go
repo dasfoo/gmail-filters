@@ -12,7 +12,7 @@ func (f *Feed) Personal(real_name []string, emails []string) {
 	smails := strings.Join(emails, " OR ")
 	e := Entry{Title: "Mail Filter", Id: "tag:dasfoo.filters,smartfilter:personal", Updated: time.Now(),
 		Category: Category{Term: `filter`, Text: ""}}
-	e.AddProperty("hasTheWord", sname)
+	e.AddProperty("hasTheWord", sname+" OR "+smails)
 	e.AddProperty("to", smails)
 	e.AddProperty("shouldAlwaysMarkAsImportant", "true")
 	e.AddProperty("shouldStar", "true")
