@@ -17,6 +17,8 @@ func main() {
 
 	v.Environment("go.example.com", "kafka.example.com")
 	v.Entertainment("english.example.com", "shopping.example.com")
+	v.TeamMessages(true, "team1@example.com", "team2@example.com")
+	v.TeamMessages(false, "team3news@example.com", "teammes@example.com")
 
 	output, err := xml.MarshalIndent(v, "  ", "   ")
 	if err != nil {
