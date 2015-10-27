@@ -58,17 +58,42 @@ func (f *Feed) Entertainment(listnames ...string) {
 	f.AddEntry(e)
 }
 
-func (f *Feed) TeamMessages(proj_not_intr bool, listnames ...string) {
-	s := strings.Join(listnames, "> OR <")
+func (f *Feed) Project(projectname, intr_str string, proj_not_intr bool) {
+	s := projectname + "-users> OR <" + projectname + "-team> OR <" + projectname + "-sre"
 	s = "list:(<" + s + ">)"
-	e := Entry{Title: "Mail Filter",
-		Id:      "tag:dasfoo.filters,smartfilter:teammes" + strconv.Itoa(len(f.Entries)),
-		Updated: time.Now(), Category: Category{Term: `filter`, Text: ""}}
-	e.AddProperty("hasTheWord", s)
-	e.AddProperty("label", "Project")
-	if proj_not_intr {
-		e.AddProperty("shouldArchive", "true")
-	}
 
-	f.AddEntry(e)
+	mess := Entry{
+		Title:    "Mail Filter",
+		Id:       "tag:dasfoo.filters,smartfilter:project" + strconv.Itoa(len(f.Entries)),
+		Updated:  time.Now(),
+		Category: Category{Term: `filter`, Text: ""}}
+	mess.AddProperty("hasTheWord", s)
+	mess.AddProperty("label", projectname)
+	if proj_not_intr {
+		mess.AddProperty("shouldArchive", "true")
+	}
+	f.AddEntry(mess)
+
+	s = projectname + "-reviews OR " + projectname + "+reviews"
+
+	rev := Entry{
+		Title:    "Mail Filter",
+		Id:       "tag:dasfoo.filters,smartfilter:project" + strconv.Itoa(len(f.Entries)),
+		Updated:  time.Now(),
+		Category: Category{Term: `filter`, Text: ""}}
+	rev.AddProperty("to", s)
+	rev.AddProperty("shouldArchive", "true")
+	f.AddEntry(rev)
+
+	intr := Entry{
+		Title:    "Mail Filter",
+		Id:       "tag:dasfoo.filters,smartfilter:project" + strconv.Itoa(len(f.Entries)),
+		Updated:  time.Now(),
+		Category: Category{Term: `filter`, Text: ""}}
+	intr.AddProperty("to", s)
+	intr.AddProperty("hasTheWord", intr_str)
+	intr.AddProperty("label", projectname)
+	intr.AddProperty("shouldAlwaysMarkAsImportant", "true")
+	f.AddEntry(intr)
+
 }
