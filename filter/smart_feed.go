@@ -1,111 +1,99 @@
 package filter
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
-	"time"
 )
 
-func (f *Feed) Personal(real_name []string, emails []string) {
+func (feed *Feed) Personal(real_name []string, emails []string) {
+	message_filter_names := strings.Join(real_name, " OR ")
+	message_filter_mails := strings.Join(emails, " OR ")
 
-	sname := strings.Join(real_name, " OR ")
-	smails := strings.Join(emails, " OR ")
-	e := Entry{
-		Title:    "Mail Filter",
-		Id:       "tag:dasfoo.filters,smartfilter:personal",
-		Updated:  time.Now(),
-		Category: Category{Term: `filter`, Text: ""}}
-	e.AddProperty("hasTheWord", sname+" OR "+smails)
-	e.AddProperty("to", smails)
-	e.AddProperty("shouldAlwaysMarkAsImportant", "true")
-	e.AddProperty("shouldStar", "true")
+	entry := NewEntry()
+	entry.Title = "Mail Filter"
+	entry.Id = "tag:dasfoo.filters,smartfilter:personal"
+	entry.AddProperty("hasTheWord", message_filter_names+" OR "+message_filter_mails)
+	entry.AddProperty("to", message_filter_mails)
+	entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
+	entry.AddProperty("shouldStar", "true")
 
-	f.AddEntry(e)
+	feed.AddEntry(*entry)
 }
 
-func (f *Feed) Team(mails ...string) {
-	s := strings.Join(mails, " OR ")
-	log.Println(s)
-	e := Entry{
-		Title:    "Mail Filter",
-		Id:       "tag:dasfoo.filters,smartfilter:team",
-		Updated:  time.Now(),
-		Category: Category{Term: `filter`, Text: ""}}
-	e.AddProperty("from", s)
-	e.AddProperty("label", "team")
-	e.AddProperty("shouldAlwaysMarkAsImportant", "true")
+func (feed *Feed) Team(mails ...string) {
+	message_filter_mails := strings.Join(mails, " OR ")
+	log.Println(message_filter_mails)
 
-	f.AddEntry(e)
+	entry := NewEntry()
+	entry.Title = "Mail Filter"
+	entry.Id = "tag:dasfoo.filters,smartfilter:team"
+	entry.AddProperty("from", message_filter_mails)
+	entry.AddProperty("label", "team")
+	entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
+
+	feed.AddEntry(*entry)
 
 }
 
-func (f *Feed) Environment(listnames ...string) {
-	s := strings.Join(listnames, "> OR <")
-	s = "list:(<" + s + ">)"
-	e := Entry{
-		Title:    "Mail Filter",
-		Id:       "tag:dasfoo.filters,smartfilter:environment",
-		Updated:  time.Now(),
-		Category: Category{Term: `filter`, Text: ""}}
-	e.AddProperty("hasTheWord", s)
-	e.AddProperty("label", "Environment")
-	e.AddProperty("shouldArchive", "true")
+func (feed *Feed) Environment(listnames ...string) {
+	message_filter_lists := "list:(<" + strings.Join(listnames, "> OR <") + ">)"
 
-	f.AddEntry(e)
+	entry := NewEntry()
+	entry.Title = "Mail Filter"
+	entry.Id = "tag:dasfoo.filters,smartfilter:environment"
+	entry.AddProperty("hasTheWord", message_filter_lists)
+	entry.AddProperty("label", "Environment")
+	entry.AddProperty("shouldArchive", "true")
+
+	feed.AddEntry(*entry)
 }
 
-func (f *Feed) Entertainment(listnames ...string) {
-	s := strings.Join(listnames, "> OR <")
-	s = "list:(<" + s + ">)"
-	e := Entry{
-		Title:    "Mail Filter",
-		Id:       "tag:dasfoo.filters,smartfilter:entertainment",
-		Updated:  time.Now(),
-		Category: Category{Term: `filter`, Text: ""}}
-	e.AddProperty("hasTheWord", s)
-	e.AddProperty("label", "Entertainment")
-	e.AddProperty("shouldArchive", "true")
+func (feed *Feed) Entertainment(listnames ...string) {
+	message_filter_lists := "list:(<" + strings.Join(listnames, "> OR <") + ">)"
 
-	f.AddEntry(e)
+	entry := NewEntry()
+	entry.Title = "Mail Filter"
+	entry.Id = "tag:dasfoo.filters,smartfilter:entertainment"
+	entry.AddProperty("hasTheWord", message_filter_lists)
+	entry.AddProperty("label", "Entertainment")
+	entry.AddProperty("shouldArchive", "true")
+
+	feed.AddEntry(*entry)
 }
 
-func (f *Feed) Project(projectname, intr_str string, proj_not_intr bool) {
-	s := projectname + "-users> OR <" + projectname + "-team> OR <" + projectname + "-sre"
-	s = "list:(<" + s + ">)"
+func (feed *Feed) Project(projectname, interesting_review_string string, project_not_intresting bool) {
+	project_messages := fmt.Sprintf("list:(<%[1]s-users> OR <%[1]s-team> OR <%[1]s-sre>)", projectname)
 
-	mess := Entry{
-		Title:    "Mail Filter",
-		Id:       "tag:dasfoo.filters,smartfilter:project" + strconv.Itoa(len(f.Entries)),
-		Updated:  time.Now(),
-		Category: Category{Term: `filter`, Text: ""}}
-	mess.AddProperty("hasTheWord", s)
-	mess.AddProperty("label", projectname)
-	if proj_not_intr {
-		mess.AddProperty("shouldArchive", "true")
+	project_message_entry := NewEntry()
+	project_message_entry.Title = "Mail Filter"
+	project_message_entry.Id = "tag:dasfoo.filters,smartfilter:project_message" + strconv.Itoa(len(feed.Entries))
+	project_message_entry.AddProperty("hasTheWord", project_messages)
+	project_message_entry.AddProperty("label", projectname)
+	if project_not_intresting {
+		project_message_entry.AddProperty("shouldArchive", "true")
 	}
-	f.AddEntry(mess)
+	feed.AddEntry(*project_message_entry)
 
-	s = projectname + "-reviews OR " + projectname + "+reviews"
+	project_reviews_messages := projectname + "-reviews OR " + projectname + "+reviews"
 
-	rev := Entry{
-		Title:    "Mail Filter",
-		Id:       "tag:dasfoo.filters,smartfilter:project" + strconv.Itoa(len(f.Entries)),
-		Updated:  time.Now(),
-		Category: Category{Term: `filter`, Text: ""}}
-	rev.AddProperty("to", s)
-	rev.AddProperty("shouldArchive", "true")
-	f.AddEntry(rev)
+	project_review_entry := NewEntry()
+	project_review_entry.Title = "Mail Filter"
+	project_review_entry.Id = "tag:dasfoo.filters,smartfilter:project_review" + strconv.Itoa(len(feed.Entries))
+	project_review_entry.AddProperty("to", project_reviews_messages)
+	project_review_entry.AddProperty("shouldArchive", "true")
 
-	intr := Entry{
-		Title:    "Mail Filter",
-		Id:       "tag:dasfoo.filters,smartfilter:project" + strconv.Itoa(len(f.Entries)),
-		Updated:  time.Now(),
-		Category: Category{Term: `filter`, Text: ""}}
-	intr.AddProperty("to", s)
-	intr.AddProperty("hasTheWord", intr_str)
-	intr.AddProperty("label", projectname)
-	intr.AddProperty("shouldAlwaysMarkAsImportant", "true")
-	f.AddEntry(intr)
+	feed.AddEntry(*project_review_entry)
+
+	project_interesting_entry := NewEntry()
+	project_interesting_entry.Title = "Mail Filter"
+	project_interesting_entry.Id = "tag:dasfoo.filters,smartfilter:project_intresting" + strconv.Itoa(len(feed.Entries))
+	project_interesting_entry.AddProperty("to", project_reviews_messages)
+	project_interesting_entry.AddProperty("hasTheWord", interesting_review_string)
+	project_interesting_entry.AddProperty("label", projectname)
+	project_interesting_entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
+
+	feed.AddEntry(*project_interesting_entry)
 
 }

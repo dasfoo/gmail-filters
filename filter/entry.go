@@ -15,6 +15,14 @@ type Entry struct {
 	Property []Property `xml:"apps:property"`
 }
 
+func NewEntry() *Entry {
+	entry := Entry{
+		Updated:  time.Now(),
+		Category: Category{Term: `filter`, Text: ""},
+	}
+	return &entry
+}
+
 func (e *Entry) AddProperty(name string, value string) {
 	pr := Property{Name: name, Value: value}
 	e.Property = append(e.Property, pr)
