@@ -12,7 +12,7 @@ func (feed *Feed) Personal(real_name []string, emails []string) {
 	message_filter_mails := strings.Join(emails, " OR ")
 
 	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:personal")
-	entry.AddProperty("hasTheWord", message_filter_names+" OR "+message_filter_mails)
+	entry.AddProperty("hasTheWord", message_filter_names+" OR  "+message_filter_mails)
 	entry.AddProperty("to", message_filter_mails)
 	entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 	entry.AddProperty("shouldStar", "true")
@@ -30,7 +30,6 @@ func (feed *Feed) Team(mails ...string) {
 	entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 
 	feed.AddEntry(entry)
-
 }
 
 func (feed *Feed) Environment(listnames ...string) {
@@ -81,5 +80,4 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 	project_interesting_entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 
 	feed.AddEntry(project_interesting_entry)
-
 }
