@@ -66,7 +66,7 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 	}
 	feed.AddEntry(project_message_entry)
 
-	project_reviews_messages := projectname + "-reviews OR " + projectname + "+reviews"
+	project_reviews_messages := fmt.Sprintf("%[1]s-reviews OR %[1]s+reviews", projectname)
 
 	project_review_entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:project_review"+strconv.Itoa(len(feed.Entries)))
 	project_review_entry.AddProperty("to", project_reviews_messages)
