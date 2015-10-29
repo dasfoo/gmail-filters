@@ -19,7 +19,7 @@ func (feed *Feed) Personal(real_name []string, emails []string) {
 	entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 	entry.AddProperty("shouldStar", "true")
 
-	feed.AddEntry(*entry)
+	feed.AddEntry(entry)
 }
 
 func (feed *Feed) Team(mails ...string) {
@@ -33,7 +33,7 @@ func (feed *Feed) Team(mails ...string) {
 	entry.AddProperty("label", "team")
 	entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 
-	feed.AddEntry(*entry)
+	feed.AddEntry(entry)
 
 }
 
@@ -47,7 +47,7 @@ func (feed *Feed) Environment(listnames ...string) {
 	entry.AddProperty("label", "Environment")
 	entry.AddProperty("shouldArchive", "true")
 
-	feed.AddEntry(*entry)
+	feed.AddEntry(entry)
 }
 
 func (feed *Feed) Entertainment(listnames ...string) {
@@ -60,7 +60,7 @@ func (feed *Feed) Entertainment(listnames ...string) {
 	entry.AddProperty("label", "Entertainment")
 	entry.AddProperty("shouldArchive", "true")
 
-	feed.AddEntry(*entry)
+	feed.AddEntry(entry)
 }
 
 func (feed *Feed) Project(projectname, interesting_review_string string, project_not_intresting bool) {
@@ -74,7 +74,7 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 	if project_not_intresting {
 		project_message_entry.AddProperty("shouldArchive", "true")
 	}
-	feed.AddEntry(*project_message_entry)
+	feed.AddEntry(project_message_entry)
 
 	project_reviews_messages := projectname + "-reviews OR " + projectname + "+reviews"
 
@@ -84,7 +84,7 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 	project_review_entry.AddProperty("to", project_reviews_messages)
 	project_review_entry.AddProperty("shouldArchive", "true")
 
-	feed.AddEntry(*project_review_entry)
+	feed.AddEntry(project_review_entry)
 
 	project_interesting_entry := NewEntry()
 	project_interesting_entry.Title = "Mail Filter"
@@ -94,6 +94,6 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 	project_interesting_entry.AddProperty("label", projectname)
 	project_interesting_entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 
-	feed.AddEntry(*project_interesting_entry)
+	feed.AddEntry(project_interesting_entry)
 
 }

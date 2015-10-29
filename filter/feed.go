@@ -20,10 +20,10 @@ func (f *Feed) AddAuthor(name string, email string) {
 	f.Author = Author{Name: name, Email: email}
 }
 
-func (f *Feed) AddEntry(e Entry) {
+func (f *Feed) AddEntry(e *Entry) {
 	e.AddProperty("sizeOperator", "s_sl")
 	e.AddProperty("sizeUnit", "s_smb")
-	f.Entries = append(f.Entries, e)
+	f.Entries = append(f.Entries, *e)
 
 }
 
