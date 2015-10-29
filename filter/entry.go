@@ -15,8 +15,10 @@ type Entry struct {
 	Property []Property `xml:"apps:property"`
 }
 
-func NewEntry() *Entry {
+func NewEntry(title, id string) *Entry {
 	entry := Entry{
+		Title:    title,
+		Id:       id,
 		Updated:  time.Now(),
 		Category: Category{Term: `filter`, Text: ""},
 	}

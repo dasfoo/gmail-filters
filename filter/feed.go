@@ -20,10 +20,10 @@ func (f *Feed) AddAuthor(name string, email string) {
 	f.Author = Author{Name: name, Email: email}
 }
 
-func (f *Feed) AddEntry(e Entry) {
-	e.AddProperty("sizeOperator", "s_sl")
-	e.AddProperty("sizeUnit", "s_smb")
-	f.Entries = append(f.Entries, e)
+func (f *Feed) AddEntry(entry *Entry) {
+	entry.AddProperty("sizeOperator", "s_sl")
+	entry.AddProperty("sizeUnit", "s_smb")
+	f.Entries = append(f.Entries, *entry)
 
 }
 
@@ -38,12 +38,12 @@ type Feed struct {
 }
 
 func NewFeed() *Feed {
-	f := Feed{}
+	feed := Feed{}
 
-	f.Xmlns = "http://www.w3.org/2005/Atom"
-	f.Xmlnapp = "http://schemas.google.com/apps/2006"
-	f.Update = time.Now()
+	feed.Xmlns = "http://www.w3.org/2005/Atom"
+	feed.Xmlnapp = "http://schemas.google.com/apps/2006"
+	feed.Update = time.Now()
 
-	return &f
+	return &feed
 
 }
