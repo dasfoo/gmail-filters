@@ -79,6 +79,17 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 	project_interesting_entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 
 	feed.AddEntry(project_interesting_entry)
+
+	project_alerts_messages := fmt.Sprintf("%[1]s-alerts OR %[1]s+alerts OR %[1]s-notifications OR %[1]s+notifications", projectname)
+
+	project_alerts_entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:project_alerts"+strconv.Itoa(len(feed.Entries)))
+	project_alerts_entry.AddProperty("to", project_alerts_messages)
+	if !project_not_intresting {
+		project_alerts_entry.AddProperty("label", projectname)
+	}
+	project_alerts_entry.AddProperty("shouldArchive", "true")
+
+	feed.AddEntry(project_alerts_entry)
 }
 
 func (feed *Feed) Services(servicename string, listnames ...string) {
