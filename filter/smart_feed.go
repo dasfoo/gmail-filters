@@ -13,8 +13,6 @@ func (feed *Feed) Personal(real_name []string, emails []string) {
 
 	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:personal")
 	entry.AddProperty("hasTheWord", message_filter_names+" OR  "+message_filter_mails)
-	entry.AddProperty("to", message_filter_mails)
-	entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 	entry.AddProperty("shouldStar", "true")
 
 	feed.AddEntry(entry)
@@ -26,8 +24,8 @@ func (feed *Feed) Team(mails ...string) {
 
 	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:team")
 	entry.AddProperty("from", message_filter_mails)
-	entry.AddProperty("label", "team")
-	entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
+	entry.AddProperty("label", "Team")
+	entry.AddProperty("shouldArchive", "true")
 
 	feed.AddEntry(entry)
 }
@@ -80,4 +78,37 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 	project_interesting_entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 
 	feed.AddEntry(project_interesting_entry)
+
+	project_alerts_messages := fmt.Sprintf("%[1]s-alerts OR %[1]s+alerts OR %[1]s-notifications OR %[1]s+notifications", projectname)
+
+	project_alerts_entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:project_alerts"+strconv.Itoa(len(feed.Entries)))
+	project_alerts_entry.AddProperty("to", project_alerts_messages)
+	if !project_not_intresting {
+		project_alerts_entry.AddProperty("label", projectname)
+	}
+	project_alerts_entry.AddProperty("shouldArchive", "true")
+
+	feed.AddEntry(project_alerts_entry)
+}
+
+func (feed *Feed) Service(servicename string, listnames ...string) {
+	message_filter_lists := "list:(<" + strings.Join(listnames, "> OR <") + ">)"
+
+	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:service"+strconv.Itoa(len(feed.Entries)))
+	entry.AddProperty("hasTheWord", message_filter_lists)
+	entry.AddProperty("label", servicename)
+
+	feed.AddEntry(entry)
+}
+
+func (feed *Feed) AutomatedSystem(systemname string, mails ...string) {
+	message_filter_mails := strings.Join(mails, " OR ")
+	log.Println(message_filter_mails)
+
+	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:automated"+strconv.Itoa(len(feed.Entries)))
+	entry.AddProperty("from", message_filter_mails)
+	entry.AddProperty("label", systemname)
+	entry.AddProperty("shouldArchive", "true")
+
+	feed.AddEntry(entry)
 }
