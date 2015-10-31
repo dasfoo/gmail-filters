@@ -91,3 +91,14 @@ func (feed *Feed) Services(servicename string, listnames ...string) {
 
 	feed.AddEntry(entry)
 }
+
+func (feed *Feed) AutomatedSystems(systemname string, mails ...string) {
+	message_filter_mails := strings.Join(mails, " OR ")
+	log.Println(message_filter_mails)
+
+	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:automated"+strconv.Itoa(len(feed.Entries)))
+	entry.AddProperty("from", message_filter_mails)
+	entry.AddProperty("label", systemname)
+
+	feed.AddEntry(entry)
+}

@@ -20,6 +20,7 @@ func main() {
 	v.Project("GmailFilters", "it is interesting", true)
 	v.Project("DasFoo", "interesting", false)
 	v.Services("Service", "service1.example.com", "service2.example.com")
+	v.AutomatedSystems("auto", "auto1@example.com", "auto2@example.com")
 
 	output, err := xml.MarshalIndent(v, "  ", "   ")
 	if err != nil {
