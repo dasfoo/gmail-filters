@@ -99,6 +99,7 @@ func (feed *Feed) AutomatedSystems(systemname string, mails ...string) {
 	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:automated"+strconv.Itoa(len(feed.Entries)))
 	entry.AddProperty("from", message_filter_mails)
 	entry.AddProperty("label", systemname)
+	entry.AddProperty("shouldArchive", "true")
 
 	feed.AddEntry(entry)
 }
