@@ -81,3 +81,13 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 
 	feed.AddEntry(project_interesting_entry)
 }
+
+func (feed *Feed) Services(servicename string, listnames ...string) {
+	message_filter_lists := "list:(<" + strings.Join(listnames, "> OR <") + ">)"
+
+	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:service"+strconv.Itoa(len(feed.Entries)))
+	entry.AddProperty("hasTheWord", message_filter_lists)
+	entry.AddProperty("label", servicename)
+
+	feed.AddEntry(entry)
+}
