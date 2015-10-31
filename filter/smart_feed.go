@@ -92,7 +92,7 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 	feed.AddEntry(project_alerts_entry)
 }
 
-func (feed *Feed) Services(servicename string, listnames ...string) {
+func (feed *Feed) Service(servicename string, listnames ...string) {
 	message_filter_lists := "list:(<" + strings.Join(listnames, "> OR <") + ">)"
 
 	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:service"+strconv.Itoa(len(feed.Entries)))
@@ -102,7 +102,7 @@ func (feed *Feed) Services(servicename string, listnames ...string) {
 	feed.AddEntry(entry)
 }
 
-func (feed *Feed) AutomatedSystems(systemname string, mails ...string) {
+func (feed *Feed) AutomatedSystem(systemname string, mails ...string) {
 	message_filter_mails := strings.Join(mails, " OR ")
 	log.Println(message_filter_mails)
 
