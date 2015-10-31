@@ -14,7 +14,6 @@ func (feed *Feed) Personal(real_name []string, emails []string) {
 	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:personal")
 	entry.AddProperty("hasTheWord", message_filter_names+" OR  "+message_filter_mails)
 	entry.AddProperty("to", message_filter_mails)
-	entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 	entry.AddProperty("shouldStar", "true")
 
 	feed.AddEntry(entry)
