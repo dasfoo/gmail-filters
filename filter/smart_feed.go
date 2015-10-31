@@ -52,12 +52,12 @@ func (feed *Feed) Entertainment(listnames ...string) {
 	feed.AddEntry(entry)
 }
 
-func (feed *Feed) Project(projectname, interesting_review_string string, project_not_intresting bool) {
+func (feed *Feed) Project(projectlabelname, projectname, interesting_review_string string, project_not_intresting bool) {
 	project_messages := fmt.Sprintf("list:(<%[1]s-users> OR <%[1]s-team> OR <%[1]s-sre>)", projectname)
 
 	project_message_entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:project_message"+strconv.Itoa(len(feed.Entries)))
 	project_message_entry.AddProperty("hasTheWord", project_messages)
-	project_message_entry.AddProperty("label", projectname)
+	project_message_entry.AddProperty("label", projectlabelname)
 	if project_not_intresting {
 		project_message_entry.AddProperty("shouldArchive", "true")
 	}
@@ -74,7 +74,7 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 	project_interesting_entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:project_intresting"+strconv.Itoa(len(feed.Entries)))
 	project_interesting_entry.AddProperty("to", project_reviews_messages)
 	project_interesting_entry.AddProperty("hasTheWord", interesting_review_string)
-	project_interesting_entry.AddProperty("label", projectname)
+	project_interesting_entry.AddProperty("label", projectlabelname)
 	project_interesting_entry.AddProperty("shouldAlwaysMarkAsImportant", "true")
 
 	feed.AddEntry(project_interesting_entry)
@@ -84,7 +84,7 @@ func (feed *Feed) Project(projectname, interesting_review_string string, project
 	project_alerts_entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:project_alerts"+strconv.Itoa(len(feed.Entries)))
 	project_alerts_entry.AddProperty("to", project_alerts_messages)
 	if !project_not_intresting {
-		project_alerts_entry.AddProperty("label", projectname)
+		project_alerts_entry.AddProperty("label", projectlabelname)
 	}
 	project_alerts_entry.AddProperty("shouldArchive", "true")
 
