@@ -72,7 +72,7 @@ func (feed *Feed) Project(projectlabelname, projectname, interesting_review_stri
 
 	if interesting_review_string != "" {
 		project_interesting_entry := NewEntry("project_intresting" + strconv.Itoa(len(feed.Entries)))
-		project_interesting_entry.AddProperty("hasTheWord", project_reviews_messages+" AND "+interesting_review_string)
+		project_interesting_entry.AddProperty("hasTheWord", project_reviews_messages+" AND ("+interesting_review_string+")")
 		project_interesting_entry.AddProperty("label", projectlabelname)
 
 		feed.AddEntry(project_interesting_entry)
