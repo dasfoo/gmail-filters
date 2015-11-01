@@ -15,10 +15,10 @@ type Entry struct {
 	Property []Property `xml:"apps:property"`
 }
 
-func NewEntry(title, id string) *Entry {
+func NewEntry(id string) *Entry {
 	entry := Entry{
-		Title:    title,
-		Id:       id,
+		Title:    "Mail Filter",
+		Id:       "tag:dasfoo.filters,smartfilter:" + id,
 		Updated:  time.Now(),
 		Category: Category{Term: `filter`, Text: ""},
 	}
