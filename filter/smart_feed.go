@@ -25,7 +25,6 @@ func (feed *Feed) Team(mails ...string) {
 	entry := NewEntry("Mail Filter", "tag:dasfoo.filters,smartfilter:team")
 	entry.AddProperty("from", message_filter_mails)
 	entry.AddProperty("label", "Team")
-	entry.AddProperty("shouldArchive", "true")
 
 	feed.AddEntry(entry)
 }
