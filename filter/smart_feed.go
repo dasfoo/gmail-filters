@@ -81,7 +81,7 @@ func (feed *Feed) Project(projectlabelname, projectname, interesting_review_stri
 	project_alerts_messages := fmt.Sprintf("list:(<%[1]s-alerts> OR <%[1]s-notifications>) OR to:(%[1]s+alerts OR %[1]s+notifications)", projectname)
 
 	project_alerts_entry := NewEntry("project_alerts" + strconv.Itoa(len(feed.Entries)))
-	project_alerts_entry.AddProperty("to", project_alerts_messages)
+	project_alerts_entry.AddProperty("hasTheWord", project_alerts_messages)
 	if !project_not_intresting {
 		project_alerts_entry.AddProperty("label", projectlabelname)
 	}
