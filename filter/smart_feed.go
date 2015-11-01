@@ -93,7 +93,7 @@ func (feed *Feed) Project(projectlabelname, projectname, interesting_review_stri
 func (feed *Feed) Service(servicename string, listnames ...string) {
 	message_filter_lists := "list:(<" + strings.Join(listnames, "> OR <") + ">)"
 
-	entry := NewEntry("ervice" + strconv.Itoa(len(feed.Entries)))
+	entry := NewEntry("service" + strconv.Itoa(len(feed.Entries)))
 	entry.AddProperty("hasTheWord", message_filter_lists)
 	entry.AddProperty("label", servicename)
 
