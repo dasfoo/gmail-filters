@@ -62,7 +62,7 @@ func (feed *Feed) Project(projectlabelname, projectname, interesting_review_stri
 	}
 	feed.AddEntry(project_message_entry)
 
-	project_reviews_messages := fmt.Sprintf("list:(<%[1]s-reviews>) OR to:%[1]s+reviews", projectname)
+	project_reviews_messages := fmt.Sprintf("list:(<%[1]s-reviews>) OR to:(%[1]s-team+reviews OR %[1]s-sre+reviews OR %[1]s-eng+reviews)", projectname)
 
 	project_review_entry := NewEntry("project_review" + strconv.Itoa(len(feed.Entries)))
 	project_review_entry.AddProperty("hasTheWord", project_reviews_messages)
