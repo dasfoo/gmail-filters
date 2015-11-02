@@ -51,6 +51,18 @@ func (feed *Feed) Entertainment(listnames ...string) {
 	feed.AddEntry(entry)
 }
 
+func (feed *Feed) Review(projectname string, additional_reviews ...string) {
+
+	additional_messages := strings.Join(additional_reviews, "> OR <")
+	project_reviews_messages := fmt.Sprintf("list:(<%[1]s-reviews> OR <"+additional_messages+">) OR to:(%[1]s-team+reviews OR %[1]s-sre+reviews OR %[1]s-eng+reviews)", projectname)
+
+	project_review_entry := NewEntry("project_review" + strconv.Itoa(len(feed.Entries)))
+	project_review_entry.AddProperty("hasTheWord", project_reviews_messages)
+	project_review_entry.AddProperty("shouldArchive", "true")
+
+	feed.AddEntry(project_review_entry)
+}
+
 func (feed *Feed) Project(projectlabelname, projectname, interesting_review_string string, project_not_intresting bool) {
 	project_messages := fmt.Sprintf("list:(<%[1]s-users> OR <%[1]s-team> OR <%[1]s-sre> OR <%[1]s-eng>)", projectname)
 
@@ -63,12 +75,6 @@ func (feed *Feed) Project(projectlabelname, projectname, interesting_review_stri
 	feed.AddEntry(project_message_entry)
 
 	project_reviews_messages := fmt.Sprintf("list:(<%[1]s-reviews>) OR to:(%[1]s-team+reviews OR %[1]s-sre+reviews OR %[1]s-eng+reviews)", projectname)
-
-	project_review_entry := NewEntry("project_review" + strconv.Itoa(len(feed.Entries)))
-	project_review_entry.AddProperty("hasTheWord", project_reviews_messages)
-	project_review_entry.AddProperty("shouldArchive", "true")
-
-	feed.AddEntry(project_review_entry)
 
 	if interesting_review_string != "" {
 		project_interesting_entry := NewEntry("project_intresting" + strconv.Itoa(len(feed.Entries)))
