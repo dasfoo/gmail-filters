@@ -51,19 +51,27 @@ func (feed *Feed) Entertainment(listnames ...string) {
 	feed.AddEntry(entry)
 }
 
-func (feed *Feed) Review(projectname string, additional_reviews ...string) {
+func (feed *Feed) Review(projectlabelname, projectname, interesting_review_string string, additional_reviews ...string) {
 
 	additional_messages := strings.Join(additional_reviews, "> OR <")
 	project_reviews_messages := fmt.Sprintf("list:(<%[1]s-reviews> OR <"+additional_messages+">) OR to:(%[1]s-team+reviews OR %[1]s-sre+reviews OR %[1]s-eng+reviews)", projectname)
 
-	project_review_entry := NewEntry("project_review" + strconv.Itoa(len(feed.Entries)))
+	project_review_entry := NewEntry("review" + strconv.Itoa(len(feed.Entries)))
 	project_review_entry.AddProperty("hasTheWord", project_reviews_messages)
 	project_review_entry.AddProperty("shouldArchive", "true")
 
 	feed.AddEntry(project_review_entry)
+
+	if interesting_review_string != "" {
+		project_interesting_entry := NewEntry("review_intresting" + strconv.Itoa(len(feed.Entries)))
+		project_interesting_entry.AddProperty("hasTheWord", project_reviews_messages+" AND ("+interesting_review_string+")")
+		project_interesting_entry.AddProperty("label", projectlabelname)
+
+		feed.AddEntry(project_interesting_entry)
+	}
 }
 
-func (feed *Feed) Project(projectlabelname, projectname, interesting_review_string string, project_not_intresting bool) {
+func (feed *Feed) Project(projectlabelname, projectname string, project_not_intresting bool) {
 	project_messages := fmt.Sprintf("list:(<%[1]s-users> OR <%[1]s-team> OR <%[1]s-sre> OR <%[1]s-eng>)", projectname)
 
 	project_message_entry := NewEntry("project_message" + strconv.Itoa(len(feed.Entries)))
@@ -73,16 +81,6 @@ func (feed *Feed) Project(projectlabelname, projectname, interesting_review_stri
 		project_message_entry.AddProperty("shouldArchive", "true")
 	}
 	feed.AddEntry(project_message_entry)
-
-	project_reviews_messages := fmt.Sprintf("list:(<%[1]s-reviews>) OR to:(%[1]s-team+reviews OR %[1]s-sre+reviews OR %[1]s-eng+reviews)", projectname)
-
-	if interesting_review_string != "" {
-		project_interesting_entry := NewEntry("project_intresting" + strconv.Itoa(len(feed.Entries)))
-		project_interesting_entry.AddProperty("hasTheWord", project_reviews_messages+" AND ("+interesting_review_string+")")
-		project_interesting_entry.AddProperty("label", projectlabelname)
-
-		feed.AddEntry(project_interesting_entry)
-	}
 
 	project_alerts_messages := fmt.Sprintf("list:(<%[1]s-alerts> OR <%[1]s-notifications>) OR to:(%[1]s+alerts OR %[1]s+notifications)", projectname)
 

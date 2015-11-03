@@ -17,9 +17,9 @@ func main() {
 
 	v.Environment("go.example.com", "kafka.example.com")
 	v.Entertainment("english.example.com", "shopping.example.com")
-	v.Review("Projectname", "xtrareview.example.com", "plusrev.example.com")
-	v.Project("Gmaillabel", "GmailFilters", "it is interesting", true)
-	v.Project("projectlabel", "DasFoo", "interesting", false)
+	v.Review("Projectlabel", "projectname", "it is interesting", "extrareview.example.com", "plusrev.example.com")
+	v.Project("Gmaillabel", "GmailFilters", true)
+	v.Project("projectlabel", "DasFoo", false)
 	v.Service("Service", "service1.example.com", "service2.example.com")
 	v.AutomatedSystem("auto", "auto1@example.com", "auto2@example.com")
 
